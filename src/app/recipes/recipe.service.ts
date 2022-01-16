@@ -62,6 +62,10 @@ export  class RecipeService {
     return this.recipes[id];
   }
 
+  getNumberOfRecipes(): number {
+    return this.recipes.length;
+  }
+
   setRecipes(recipes: Recipe[]): void {
     this.recipes = recipes;
     // @ts-ignore

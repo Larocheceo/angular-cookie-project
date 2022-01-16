@@ -1,6 +1,10 @@
 <div class="row mt-3 mb-3">
-  <div class="col-xs-12">
-    <button class="btn btn-outline-primary btn-lg" (click)="onNewRecipe()">Nouvelle Recette</button>
+  <div class="col-6">
+    <button class="btn btn-outline-primary" (click)="onNewRecipe()">Créer Recette</button>
+  </div>
+  <div class="col-6">
+    <button class="btn btn-outline-primary" (click)="showMoreRecepes()">
+      {{loadMoreRecipes ? 'Afficher Moins' : 'Afficher plus'}}</button>
   </div>
 </div>
 <div class="row">
@@ -8,9 +12,9 @@
     <app-recipe-item *ngFor="let recipeItem of recipes let i = index"
                      [recipe]="recipeItem"
                      [id]="i"
+                     [ngClass]="i > 1 ? lazyLoader: ''"
 
     ></app-recipe-item>
   </div>
 </div>
-
 

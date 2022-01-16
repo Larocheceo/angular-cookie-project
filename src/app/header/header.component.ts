@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from "@angular/core";
+import {AfterViewInit, Component, EventEmitter, OnChanges, OnDestroy, OnInit, Output} from "@angular/core";
 import {DataStorageService} from "../shared/data-storage.service";
 import {AuthService} from "../auth/auth.service";
 import {Subscription} from "rxjs";
@@ -22,7 +22,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isAuth = user ? true : false;
       }
     );
+
   }
+
 
   onSaveData(): void {
     this.dataStorageService.storeRecipes();

@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild, EventEmitter, Output} from '@angular/core';
 import {Ingredient} from "../../shared/ingredient.model";
 import {ShoppingListService} from "../shopping-list.service";
 import {NgForm} from "@angular/forms";
 import {Subscription} from "rxjs";
+
 
 @Component({
   selector: 'app-shopping-edit',
@@ -10,15 +11,15 @@ import {Subscription} from "rxjs";
   styleUrls: ['./shopping-edit.component.css']
 })
 export class ShoppingEditComponent implements OnInit, OnDestroy {
-  // @ts-ignore
-  @ViewChild('f') shoppingListForm: NgForm;
-  // @ts-ignore
-  subscription: Subscription;
-  // @ts-ignore
-  editedIngredientIndex: number;
-  // @ts-ignore
-  editedIngredient: Ingredient;
+  @ViewChild('f') shoppingListForm!: NgForm;
+  @Output() ingredientAdded:EventEmitter<void> = new EventEmitter();
+  subscription!: Subscription;
+  editedIngredientIndex!: number;
+  editedIngredient!: Ingredient;
   editMode = false;
+  displayAlert!: boolean;
+  isDeleted!: boolean;
+
   constructor(private shoppingListService: ShoppingListService) { }
 
   ngOnInit(): void {
@@ -43,8 +44,12 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     const ingredient = new Ingredient(value.name, value.quantity, value.unit);
     if(this.editMode) {
       this.shoppingListService.updateIngredient(this.editedIngredientIndex, ingredient);
+      this.displayAlert=true;
+      this.isDeleted = false;
     } else {
       this.shoppingListService.addIngredient(ingredient);
+      this.ingredientAdded.emit();
+      this.displayAlert = false;
     }
     this.editMode = false;
     form.reset();
@@ -61,7 +66,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    this.shoppingListService.deleteIngredient(this.editedIngredientIndex)
+    this.shoppingListService.deleteIngredient(this.editedIngredientIndex);
+    this.displayAlert=true;
+    this.isDeleted = true;
     this.onReset();
   }
 }

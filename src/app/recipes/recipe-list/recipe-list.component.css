@@ -1,0 +1,7 @@
+.hide-recipes {
+  display: none;
+}
+
+.show-recipes {
+  display: block !important;
+}

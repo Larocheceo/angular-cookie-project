@@ -3,6 +3,7 @@ import {Recipe} from "../recipe.model";
 import {RecipeService} from "../recipe.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import { DataStorageService } from 'src/app/shared/data-storage.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -13,7 +14,11 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   // @ts-ignore
   recipes: Recipe[];
   subscription!: Subscription;
-  constructor(private  recipeService: RecipeService, private router: Router,
+  lazyLoader = "hide-recipes";
+  loadMoreRecipes = false;
+  constructor(private  recipeService: RecipeService,
+              private dataStorageService: DataStorageService,
+              private router: Router,
               private  activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -22,7 +27,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
         // @ts-ignore
         (recipes: Recipe[]) => this.recipes = recipes
       );
-    //this.recipes = this.recipeService.getRecipes();
+    this.dataStorageService.retrieveRecipes().subscribe();
   }
 
   onNewRecipe(): void {
@@ -31,5 +36,15 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  showMoreRecepes(): void {
+    if(this.loadMoreRecipes) {
+      this.loadMoreRecipes = false;
+      this.lazyLoader="hide-recipes";
+    } else {
+      this.loadMoreRecipes = true;
+      this.lazyLoader="show-recipes";
+    }
   }
 }

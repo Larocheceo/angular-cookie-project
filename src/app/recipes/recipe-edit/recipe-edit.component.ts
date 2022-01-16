@@ -73,10 +73,11 @@ export class RecipeEditComponent implements OnInit {
     )
     if(this.editMode) {
       this.recipeService.updateRecipe(this.id, newRecipe);
+      this.onCancel();
     } else {
       this.recipeService.addRecipe(newRecipe);
+      this.afterAddingRecipe();
     }
-    this.onCancel();
   }
 
   onAddIngredient(): void {
@@ -94,6 +95,11 @@ export class RecipeEditComponent implements OnInit {
 
   onCancel(): void {
     this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+  }
+
+  afterAddingRecipe(): void {
+    const recipeId = this.recipeService.getNumberOfRecipes() - 1;
+    this.router.navigate(['../' + recipeId], {relativeTo: this.activatedRoute});
   }
 
   onDeleteIngredient(index: number): void {

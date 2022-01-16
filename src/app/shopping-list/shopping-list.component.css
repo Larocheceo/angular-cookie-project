@@ -1,0 +1,13 @@
+.achat-item {
+  display: inline;
+  animation: background-fade 4s backwards;
+}
+
+@keyframes background-fade {
+  50% {
+    background:#E1FEE0;
+  }
+  100% {
+    background:darkolivegreen;
+  }
+}

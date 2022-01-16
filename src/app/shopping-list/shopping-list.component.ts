@@ -12,6 +12,7 @@ export class ShoppingListComponent implements OnInit {
   ingredients: Ingredient[]= [];
   // @ts-ignore
   private ingChangedSubscription: Subscription;
+  ingredientAdded = true;
   constructor(private shoppingListService: ShoppingListService) { }
 
   ngOnInit(): void {
@@ -30,4 +31,8 @@ export class ShoppingListComponent implements OnInit {
   }
 
 
+  onIngredientAdded(): void {
+    this.ingredientAdded = true;
+    console.log(this.ingredientAdded);
+  }
 }

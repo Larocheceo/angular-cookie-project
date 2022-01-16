@@ -6,10 +6,12 @@
     <div class="list-group">
       <a class="list-group-item list-group-item-action"
          style="cursor:pointer;"
+         (ingredientAdded)="onIngredientAdded()"
+         [ngClass]="{'achat-item' : ingredientAdded}"
          *ngFor="let ingredient of ingredients; let i=index"
         (click)="onEditIngredient(i)"
       >
-        {{ingredient.name}} ({{ingredient.quantity}}{{ingredient.unit}})
+        {{ingredient.name}} ({{ingredient.quantity}}{{ingredient.unit}})  {{ingredientAdded}}
       </a>
     </div>
   </div>
