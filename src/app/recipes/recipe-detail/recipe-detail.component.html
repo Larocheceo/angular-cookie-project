@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-xs-12">
+    <img [src]="recipe.imageURL" alt="{{recipe.name}}" class="img-fluid" />
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>{{recipe.name}}</h1>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="dropdown">
+      <a style="cursor: pointer" class="dropdown-toggle" id="recipeDetailDropdownMenuLink" role="button"
+         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" appDropdown #dropdownActionsRef="appDropdown" >Actions</a>
+      <div class="dropdown-menu" [ngClass]="{'show': dropdownActionsRef.isOpen}" aria-labelledby="recipeDetailDropdownMenuLink">
+        <a (click)="addIngredientsToList()" class="dropdown-item">Àjouter à liste</a>
+        <a style="cursor: pointer"  class="dropdown-item" (click)="onRecipeEdit()">Modifier recette</a>
+        <a style="cursor: pointer"  class="dropdown-item" (click)="onDeleteRecipe()">Supprimer recette</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    {{recipe.description}}
+  </div>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h2>Ingredients</h2>
+    <ul class="list-group">
+      <li class="list-group-item"
+        *ngFor="let ingredient of recipe.ingredients">{{ingredient.name}}  {{ingredient.quantity}}{{ingredient.unit}}
+      </li>
+    </ul>
+  </div>
+</div>

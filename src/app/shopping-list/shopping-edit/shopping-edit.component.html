@@ -1,0 +1,62 @@
+<div class="row mt-5 p-5 bg-light">
+  <div class="col-xs-12">
+    <form #f="ngForm" (ngSubmit)="onAddEditIngredient(f)">
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="inputIngredient">Ingredient</label>
+          <input type="text"
+                 class="form-control"
+                 id="inputIngredient"
+                  name = "name"
+                 ngModel
+                 required
+          >
+        </div>
+
+        <div class="form-group col-md-2">
+          <label for="inputQuantity">Qté</label>
+          <input type="text"
+                 class="form-control"
+                 id="inputQuantity"
+                 name = "quantity"
+                 ngModel
+                 required
+                 pattern="^[1-9]+[0-9]*$"
+          >
+        </div>
+
+        <div class="form-group col-md-2">
+          <label for="inputUnit">Unité</label>
+          <select id="inputUnit"
+                  class="form-control"
+                  name = "unit"
+                  ngModel
+          >
+            <option value="" selected>n/a</option>
+            <option value="g" >g</option>
+            <option value="kg" >kg</option>
+            <option value="L" >L</option>
+            <option value="cL" >cL</option>
+            <option value="mL" >mL</option>
+          </select>
+        </div>
+      </div>
+      <div class="float-right mt-2">
+        <button type="button"
+                class="btn btn-outline-dark"
+                (click)="onReset()"
+        > Réinitialiser</button>
+        <button
+                *ngIf="editMode"
+                type="button"
+                class="btn btn-danger ms-2"
+                (click)="onDelete()"
+        > Supprimer</button>
+        <button type="submit"
+                class="btn btn-success text-uppercase font-weight-bold ms-2"
+                [disabled]="!f.valid"
+        > {{editMode?'Mettre à jour': 'Ajouter'}}</button>
+      </div>
+    </form>
+  </div>
+</div>
